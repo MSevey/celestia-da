@@ -14,9 +14,6 @@ on:
 
 jobs:
   docker-security-build:
-    permissions:
-      contents: write
-      packages: write
-    uses: rollkit/.github/.github/workflows/reusable_dockerfile_pipeline.yml@v0.2.2 # yamllint disable-line rule:line-length
-    with:
-      dockerfile: Dockerfile
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "docker run"

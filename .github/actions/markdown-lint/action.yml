@@ -1,0 +1,29 @@
+name: "Markdown Lint"
+description: "Lint markdown files with markdownlint"
+inputs:
+  config_file_path:
+    required: false
+    description: "relative path to a .markdownlint.yaml config file"
+    default: ".markdownlint.yaml"
+  folder_path:
+    required: false
+    description: >
+      By default the github-action-markdown-link-check action checks for all
+      markdown files in this repo. Use this option to limit checks to only
+      specific folders. Use comma separated values for checking multiple
+      folders.
+    default: "."
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 18
+    - run: npm install -g markdownlint-cli@0.32.1
+      shell: bash
+    - run: markdownlint --config ${{ inputs.config_file_path }} **/*.md
+      shell: bash
+    - uses: gaurav-nelson/github-action-markdown-link-check@1.0.14
+      with:
+        folder-path: ${{ inputs.folder_path }}
